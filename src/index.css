@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  need to define the varibles in :root to get them into colors.js, then
+  transfer these values to javascript variables to define class at configs
+  of tailwind (tailwind.config.js)
+*/
+
+@layer components {
+  .base-button-lg {
+    @apply rounded-md bg-primary px-6 py-4 font-bold text-white shadow;
+  }
+  .base-button-sm {
+    @apply rounded-md bg-primary px-4 py-2 font-bold text-white shadow;
+  }
+}

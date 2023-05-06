@@ -1,2 +1,2 @@
-# adm-maintenance
- To help the management of a building maintenance
+# refactor-om-project
+refactor to updated libs of  Otavio Miranda's Javascript Course Project
