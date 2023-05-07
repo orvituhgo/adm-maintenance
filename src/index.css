@@ -1,18 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* 
-  need to define the varibles in :root to get them into colors.js, then
-  transfer these values to javascript variables to define class at configs
-  of tailwind (tailwind.config.js)
-*/
+body {
+  @apply bg-primaryDark;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 @layer components {
+  .profile-card {
+    @apply flex min-w-fit cursor-pointer flex-col items-center justify-center rounded-sm bg-offWhite shadow-sm;
+  }
   .base-button-lg {
-    @apply rounded-md bg-primary px-6 py-4 font-bold text-white shadow;
+    @apply rounded-md bg-primary px-6 py-4 font-bold text-white shadow outline-1 outline-offWhite;
   }
   .base-button-sm {
-    @apply rounded-md bg-primary px-4 py-2 font-bold text-white shadow;
+    @apply rounded-md bg-primary px-4 py-2 font-bold text-white shadow outline-1 outline-offWhite;
   }
 }

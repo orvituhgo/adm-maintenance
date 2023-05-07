@@ -1,29 +1,44 @@
+import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+
+import { BuildingsContext } from '../contexts/BuildingsContextProvider';
+import { LoginContext } from '../contexts/LoginContextProvider';
+
 export default function Profile() {
+  const navigate = useNavigate();
+  const { user, activeProfile, setActiveProfile, saveActiveProfile } =
+    useContext(LoginContext);
+  console.log(user.buildings);
+
+  function handleClickProfile(e) {
+    const card = document.querySelector('.building-name');
+    user.activeProfile.setActiveProfile(card.innerHTML);
+    console.log(`user.activeprofile = ${user.activeProfile}`);
+    setActiveProfile(card.innerHTML);
+    saveActiveProfile(activeProfile);
+    console.log(card.innerHTML, activeProfile);
+    navigate('/home');
+  }
+
   return (
     <>
       <div className="flex h-screen w-screen flex-col items-center justify-evenly bg-primaryDark">
-        <div className="flex h-5/6 w-full items-center justify-center gap-2 overflow-x-auto bg-red-500">
+        <div className="flex h-5/6 max-w-[900%] items-center justify-start gap-8 overflow-x-auto">
           {/* {aqui vai entrar um map de um objeto do backend}  */}
-          <div className="flex h-full w-64 min-w-fit items-center justify-center rounded-sm bg-offWhite shadow-sm">
-            <img src="placeholder.com/300/200" alt="" srcset="" />
-          </div>
-          <div className="flex h-full w-64 items-center justify-center rounded-sm bg-offWhite shadow-sm">
-            2222222222222
-          </div>
-          <div className="flex h-full w-64 items-center justify-center rounded-sm bg-offWhite shadow-sm">
-            3333333333333
-          </div>
-          <div className="flex h-full w-1/3 items-center justify-center rounded-sm bg-offWhite shadow-sm">
-            4444444444444
-          </div>
-          <div className="flex h-full w-1/3 items-center justify-center rounded-sm bg-offWhite shadow-sm">
-            5555555555555
-          </div>
-          <div className="flex h-full w-1/3 items-center justify-center rounded-sm bg-offWhite shadow-sm">
-            6666666666666
-          </div>
+          {user.buildings &&
+            user.buildings.map((building, index) => {
+              return (
+                <div
+                  onClick={handleClickProfile}
+                  key={index}
+                  className="profile-card"
+                >
+                  <img src={building.url} alt={building.nickname} />
+                  <h2 className="building-name">{building.nickname}</h2>
+                </div>
+              );
+            })}
         </div>
-        <button>cadastrar novo</button>
       </div>
     </>
   );

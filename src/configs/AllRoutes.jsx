@@ -16,18 +16,18 @@ export default function AllRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route
-        path="/home"
-        element={
-          <PrivateRoute>
-            <Home isClosed />
-          </PrivateRoute>
-        }
-      />
-      <Route
         path="/profile"
         element={
           <PrivateRoute>
             <Profile isClosed />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/home"
+        element={
+          <PrivateRoute>
+            <Home isClosed />
           </PrivateRoute>
         }
       />

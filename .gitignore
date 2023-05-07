@@ -19,7 +19,8 @@ babel.config.js
 .editorconfig
 .eslintignore
 .eslintrc.cjs
-.prettierrc
+.prettierrc*
+.*
 .prettierignore
 .txt
 .vscode
@@ -34,5 +35,3 @@ babel.config.js
 *.njsproj
 *.sln
 *.sw?
-*.txt
-.prettierrc.json
