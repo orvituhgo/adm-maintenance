@@ -6,7 +6,6 @@ export const LoginContext = createContext({});
 
 export default function LoginContextProvider({ children }) {
   const [user, setUser] = useState([]);
-  const [activeProfile, setActiveProfile] = useState('');
 
   useEffect(() => {
     const validateToken = async () => {
@@ -41,8 +40,14 @@ export default function LoginContextProvider({ children }) {
     setToken('');
   };
 
-  const saveActiveProfile = (profileClicked) => {
+  const getActiveProfile = () => {
+    return localStorage.getItem('activeProfile');
+  };
+  const setActiveProfile = (profileClicked) => {
     localStorage.setItem('activeProfile', profileClicked);
+  };
+  const unsetActiveProfile = () => {
+    setActiveProfile('');
   };
 
   const setToken = (token) => {
@@ -53,9 +58,9 @@ export default function LoginContextProvider({ children }) {
     user,
     login,
     logout,
-    activeProfile,
-    saveActiveProfile,
+    getActiveProfile,
     setActiveProfile,
+    unsetActiveProfile,
   };
 
   return (

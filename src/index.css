@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-primaryDark;
+  @apply bg-primaryDark text-secundaryDark;
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
@@ -12,8 +12,10 @@ body {
 }
 
 @layer components {
+  .general-container {
+  }
   .profile-card {
-    @apply flex min-w-fit cursor-pointer flex-col items-center justify-center rounded-sm bg-offWhite shadow-sm;
+    @apply flex min-w-fit cursor-pointer flex-col items-center justify-center rounded-sm bg-primary text-lg font-bold text-secundaryDark shadow-sm;
   }
   .base-button-lg {
     @apply rounded-md bg-primary px-6 py-4 font-bold text-white shadow outline-1 outline-offWhite;

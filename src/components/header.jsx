@@ -5,22 +5,23 @@ import { Link, useLocation } from 'react-router-dom';
 import { LoginContext } from '../contexts/LoginContextProvider';
 
 export default function Header() {
-  const { user, activeProfile } = useContext(LoginContext);
+  const { user, getActiveProfile } = useContext(LoginContext);
   const pathing = useLocation().pathname;
   const noShow = ['/login', '/profile', '/forgotpassword'];
+  const activeProfile = getActiveProfile();
 
   return (
     <>
       {!noShow.includes(pathing) && (
         <nav
           onClick={() => console.log(activeProfile)}
-          className="flex h-16 w-screen items-center justify-end gap-6 bg-primary text-stone-800"
+          className="flex h-16 w-screen items-center justify-end bg-primary text-secundaryDark"
         >
           {/* {isLoggedIn && <span>Olá, User</span>} */}
           {user ? (
-            <span>Olá, {user.username}</span>
+            <span className="mr-0">Olá, {user.username}</span>
           ) : (
-            <span>Error, user not logged </span>
+            <span className="mr-0">Error, user not logged </span>
           )}
           <ul className="flex w-1/4 justify-center gap-6 bg-primary">
             <li className="my-auto">

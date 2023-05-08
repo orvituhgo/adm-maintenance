@@ -9,22 +9,17 @@ export const useApi = () => ({
         buildings: [
           {
             nickname: 'TowerOne',
-            url: 'https://placehold.co/400x500/736b66/403d39',
+            url: 'https://placehold.co/400x600/3292A8/403d39',
           },
           {
             nickname: 'TowerThree',
-            url: 'https://placehold.co/400x500/736b66/403d39',
+            url: 'https://placehold.co/400x600/3292A8/403d39',
           },
           {
             nickname: 'TowerFour',
-            url: 'https://placehold.co/400x500/736b66/403d39',
+            url: 'https://placehold.co/400x600/3292A8/403d39',
           },
         ],
-        setActiveProfile: (profile) => {
-          this.activeProfile;
-          return profile;
-        },
-        activeProfile: this.setActiveProfile,
       },
     };
     // const response = await api.post('/validate', { token });
@@ -38,15 +33,15 @@ export const useApi = () => ({
         buildings: [
           {
             nickname: 'TowerOne',
-            url: 'https://placehold.co/400x500/736b66/403d39',
+            url: 'https://placehold.co/400x600/3292A8/403d39',
           },
           {
             nickname: 'TowerThree',
-            url: 'https://placehold.co/400x500/736b66/403d39',
+            url: 'https://placehold.co/400x600/3292A8/403d39',
           },
           {
             nickname: 'TowerFour',
-            url: 'https://placehold.co/400x500/736b66/403d39',
+            url: 'https://placehold.co/400x600/3292A8/403d39',
           },
         ],
       },
