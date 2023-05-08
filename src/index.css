@@ -13,6 +13,29 @@ body {
 
 @layer components {
   .general-container {
+    @apply relative flex min-h-full flex-col overflow-x-auto rounded-md bg-offWhite;
+    margin: 44px auto 20px auto;
+    width: 93%;
+    height: 340px;
+  }
+  .title-container {
+    @apply p-10 text-left text-2xl  font-bold;
+  }
+  .table-os {
+    @apply mx-10 table-fixed border-collapse border-y-secundary;
+  }
+  .row-table {
+    /* @apply border border-x-0 border-y-secundary transition-colors hover:bg-secundaryDark/20; */
+    @apply border border-x-0 border-y-secundary transition-colors hover:bg-primary/5;
+  }
+  .head-table {
+    @apply bg-primary text-offWhite hover:bg-primary;
+  }
+  .cell-table {
+    @apply p-4 text-center text-xl;
+  }
+  .link-details {
+    @apply hover:text-primaryDark hover:decoration-primaryDark;
   }
   .profile-card {
     @apply flex min-w-fit cursor-pointer flex-col items-center justify-center rounded-sm bg-primary text-lg font-bold text-secundaryDark shadow-sm;

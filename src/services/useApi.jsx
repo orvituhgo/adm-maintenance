@@ -79,7 +79,22 @@ export const useApi = () => ({
         },
       ],
     };
-    // const response = await api.get('/buildings', {email});
-    // return response.data;
   },
+
+  getBuildingProfile: (building) => {
+    return {
+      nickname: building,
+      url: 'https://placehold.co/400x500/736b66/403d39',
+      osList: [
+        {
+          no: 123456,
+          datetime: '01 Jan 1970 00:00:00 GMT',
+          orderBy: 'Maria Silva',
+          type: 'Manutenção Corretiva',
+        },
+      ],
+    };
+  },
+  // const response = await api.get('/buildings', {email});
+  // return response.data;
 });

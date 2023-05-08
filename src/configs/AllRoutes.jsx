@@ -9,6 +9,7 @@ import Profile from '../pages/profile.jsx';
 import Logout from '../pages/logout';
 import Page404 from '../pages/page404';
 import ForgotPassword from '../pages/forgotPassword';
+import Details from '../pages/details';
 
 export default function AllRoutes() {
   return (
@@ -28,6 +29,14 @@ export default function AllRoutes() {
         element={
           <PrivateRoute>
             <Home isClosed />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/os/:OSid"
+        element={
+          <PrivateRoute>
+            <Details isClosed />
           </PrivateRoute>
         }
       />

@@ -24,15 +24,7 @@ export default function BuildingsContextProvider({ children }) {
   //   validateProfile();
   // }, []);
 
-  // const getPermitedBuildings = async () => {
-  //   const data = await api.getBuildings(user.username);
-  //   setBuildingsList(data.buildings);
-  //   console.log(buildingsList);
-  // };
-
-  // const setProfile = (profile) => {
-  //   localStorage.setItem('loginToken', profile);
-  // };
+  const getBuildingStatus = (building) => {};
 
   const value = {
     // getPermitedBuildings,
