@@ -12,6 +12,8 @@ export default function BuildingsContextProvider({ children }) {
 
   const { getActiveProfile } = useContext(LoginContext);
 
+  const watcherStorageData = getActiveProfile();
+
   useEffect(() => {
     const validateProfile = async () => {
       const storageData = getActiveProfile();
@@ -23,8 +25,10 @@ export default function BuildingsContextProvider({ children }) {
         }
       }
     };
+
     validateProfile();
-  }, []);
+  }, [watcherStorageData]);
+  //necessário watcher aqui pois não está num hook, portanto não estava sendo observado quando perdia os dados
 
   const syncBuildingProfile = async () => {
     const activeProfile = getActiveProfile();
