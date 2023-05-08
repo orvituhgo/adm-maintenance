@@ -12,7 +12,7 @@ export default function Logout() {
     setTimeout(() => {
       logout();
       navigate('/login');
-    }, 2000);
+    }, 1500);
   }, []);
 
   return (

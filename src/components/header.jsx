@@ -15,7 +15,7 @@ export default function Header() {
       {!noShow.includes(pathing) && (
         <nav
           onClick={() => console.log(activeProfile)}
-          className="flex h-16 w-screen items-center justify-end bg-primary text-secundaryDark"
+          className="flex h-16 w-full items-center justify-end bg-primary text-secundaryDark"
         >
           {/* {isLoggedIn && <span>Olá, User</span>} */}
           {user ? (

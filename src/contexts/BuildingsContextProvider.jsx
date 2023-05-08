@@ -6,30 +6,35 @@ import { LoginContext } from './LoginContextProvider';
 export const BuildingsContext = createContext({});
 
 export default function BuildingsContextProvider({ children }) {
-  // const [activeProfile, setActiveProfile] = useState();
-  // const api = useApi();
+  const [buildingInfo, setBuildingInfo] = useState([]);
 
-  // const { user } = useContext(LoginContext);
+  const api = useApi();
 
-  // useEffect(() => {
-  //   const validateProfile = async () => {
-  //     const storageData = localStorage.getItem('activeProfile');
-  //     if (storageData) {
-  //       const data = await api.validateToken(storageData);
-  //       if (data.buildings) {
-  //         setUser(data.buildings);
-  //       }
-  //     }
-  //   };
-  //   validateProfile();
-  // }, []);
+  const { getActiveProfile } = useContext(LoginContext);
 
-  const getBuildingStatus = (building) => {};
+  useEffect(() => {
+    const validateProfile = async () => {
+      const storageData = getActiveProfile();
+      console.log('storageData:', storageData);
+      if (storageData) {
+        const data = await api.getBuildingInfo(storageData);
+        if (data.building) {
+          setBuildingInfo(data.building);
+        }
+      }
+    };
+    validateProfile();
+  }, []);
+
+  const syncBuildingProfile = async () => {
+    const activeProfile = getActiveProfile();
+    const response = await api.getBuildingInfo(activeProfile);
+    setBuildingInfo(response);
+  };
 
   const value = {
-    // getPermitedBuildings,
-    // buildingsList,
-    // setBuildingsList,
+    syncBuildingProfile,
+    buildingInfo,
   };
 
   return (

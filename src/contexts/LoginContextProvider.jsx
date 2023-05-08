@@ -38,6 +38,7 @@ export default function LoginContextProvider({ children }) {
     const data = await api.logout();
     setUser(null);
     setToken('');
+    unsetActiveProfile();
   };
 
   const getActiveProfile = () => {

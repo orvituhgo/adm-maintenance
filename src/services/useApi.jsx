@@ -81,20 +81,30 @@ export const useApi = () => ({
     };
   },
 
-  getBuildingProfile: (building) => {
+  getBuildingInfo: (building) => {
     return {
-      nickname: building,
-      url: 'https://placehold.co/400x500/736b66/403d39',
-      osList: [
-        {
-          no: 123456,
-          datetime: '01 Jan 1970 00:00:00 GMT',
-          orderBy: 'Maria Silva',
-          type: 'Manutenção Corretiva',
-        },
-      ],
+      building: {
+        nickname: building,
+        url: 'https://placehold.co/400x500/736b66/403d39',
+        osList: [
+          {
+            no: 123456,
+            datetime: '01 Jan 1970 00:00:00 GMT',
+            orderBy: 'Maria Silva',
+            type: 'Manutenção Corretiva',
+            local: `${building} 8º andar`,
+          },
+          {
+            no: 234567,
+            datetime: '01 Jan 1970 00:00:00 GMT',
+            orderBy: 'José Pereira',
+            type: 'Manutenção Preventiva',
+            local: `${building} Ap 1109`,
+          },
+        ],
+      },
     };
   },
-  // const response = await api.get('/buildings', {email});
+  // const response = await api.get('/buildings', {nickname});
   // return response.data;
 });

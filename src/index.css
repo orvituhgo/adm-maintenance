@@ -13,10 +13,10 @@ body {
 
 @layer components {
   .general-container {
-    @apply relative flex min-h-full flex-col overflow-x-auto rounded-md bg-offWhite;
+    @apply relative flex min-h-full flex-col overflow-x-hidden rounded-md bg-offWhite;
     margin: 44px auto 20px auto;
     width: 93%;
-    height: 340px;
+    height: 1200px;
   }
   .title-container {
     @apply p-10 text-left text-2xl  font-bold;

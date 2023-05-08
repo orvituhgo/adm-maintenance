@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+
+import { BuildingsContext } from '../contexts/BuildingsContextProvider';
 
 export default function Home() {
+  const { buildingInfo } = useContext(BuildingsContext);
+  console.log(buildingInfo);
+  const { osList } = buildingInfo;
+  console.log(osList);
+
   return (
     // <div className="flex h-3/4 flex-col items-center justify-center bg-offWhite">
     <div className="general-container">
@@ -17,6 +25,21 @@ export default function Home() {
           </tr>
         </thead>
         <tbody>
+          {osList &&
+            osList.map((os) => {
+              return (
+                <tr className="row-table">
+                  <td className="cell-table">{os.no}</td>
+                  <td className="cell-table">{os.datetime}</td>
+                  <td className="cell-table">{os.orderBy}</td>
+                  <td className="cell-table">{os.type}</td>
+                  <td className="cell-table">{os.local}</td>
+                  <td className="cell-table link-details">
+                    <Link to={`/os/${os.no}`}>Ver detalhes</Link>
+                  </td>
+                </tr>
+              );
+            })}
           <tr className="row-table">
             <td className="cell-table">123456</td>
             <td className="cell-table">DD/MM/AA HH:MM</td>

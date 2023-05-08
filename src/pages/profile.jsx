@@ -6,16 +6,19 @@ import { LoginContext } from '../contexts/LoginContextProvider';
 
 export default function Profile() {
   const navigate = useNavigate();
-  const { user, setActiveProfile, unsetActiveProfile } =
+  const { user, setActiveProfile, unsetActiveProfile, getActiveProfile } =
     useContext(LoginContext);
-  console.log(user.buildings);
+  const { syncBuildingProfile } = useContext(BuildingsContext);
 
   useEffect(() => {
     unsetActiveProfile();
   }, []);
 
-  function handleClickProfile(value) {
+  async function handleClickProfile(value) {
+    console.log(getActiveProfile());
     setActiveProfile(value);
+    console.log(getActiveProfile());
+    await syncBuildingProfile();
     navigate('/home');
   }
 
