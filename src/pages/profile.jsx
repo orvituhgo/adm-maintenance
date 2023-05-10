@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
+import { FaPlusCircle } from 'react-icons/fa';
 
 import { BuildingsContext } from '../contexts/BuildingsContextProvider';
 import { LoginContext } from '../contexts/LoginContextProvider';
@@ -15,9 +16,7 @@ export default function Profile() {
   }, []);
 
   async function handleClickProfile(value) {
-    console.log(getActiveProfile());
     setActiveProfile(value);
-    console.log(getActiveProfile());
     await syncBuildingProfile();
     navigate('/home');
   }
@@ -25,7 +24,7 @@ export default function Profile() {
   return (
     <>
       <div className="flex h-screen w-screen flex-col items-center justify-evenly bg-primaryDark">
-        <div className="flex h-5/6 max-w-[900%] items-center justify-start gap-8 overflow-x-auto">
+        <div className="relative flex h-5/6 max-w-7xl items-center justify-start gap-8 overflow-hidden">
           {user.buildings &&
             user.buildings.map((building, index) => {
               return (
@@ -40,6 +39,9 @@ export default function Profile() {
               );
             })}
         </div>
+        <button>
+          <FaPlusCircle size={48} />
+        </button>
       </div>
     </>
   );

@@ -17,7 +17,6 @@ export default function BuildingsContextProvider({ children }) {
   useEffect(() => {
     const validateProfile = async () => {
       const storageData = getActiveProfile();
-      console.log('storageData:', storageData);
       if (storageData) {
         const data = await api.getBuildingInfo(storageData);
         if (data.building) {

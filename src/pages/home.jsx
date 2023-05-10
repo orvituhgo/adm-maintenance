@@ -5,9 +5,7 @@ import { BuildingsContext } from '../contexts/BuildingsContextProvider';
 
 export default function Home() {
   const { buildingInfo } = useContext(BuildingsContext);
-  console.log(buildingInfo);
   const { osList } = buildingInfo;
-  console.log(osList);
 
   return (
     // <div className="flex h-3/4 flex-col items-center justify-center bg-offWhite">

@@ -1,20 +1,33 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../contexts/LoginContextProvider';
+import { auth } from '../configs/firebase';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useContext(LoginContext);
+  const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
   function handleUsernameInput(e) {
     setUsername(e.target.value);
-    console.log(username);
   }
   function handlePasswordInput(e) {
     setPassword(e.target.value);
-    console.log(password);
+  }
+  function toggleShowPassword(e) {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  }
+  function handleDown(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleLogin();
+    }
   }
   async function handleLogin() {
     if (username && password) {
@@ -30,7 +43,7 @@ export default function Login() {
   return (
     <div className=" flex h-screen w-screen items-center justify-center">
       <form
-        action=""
+        method="get"
         className="min-w-1/6 flex h-3/6 flex-col items-center justify-around rounded-md bg-offWhite shadow-sm"
       >
         <h1 className="text-3xl font-bold">Login</h1>
@@ -46,11 +59,23 @@ export default function Login() {
             />
           </div>
           <div>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">
+              Password{' '}
+              {showPassword ? (
+                <button className="relative right-0 items-end self-end align-middle text-secundaryDark">
+                  <FaRegEye size={18} onClick={toggleShowPassword} />
+                </button>
+              ) : (
+                <button className="relative left-0 items-end self-end align-middle text-secundaryDark">
+                  <FaRegEyeSlash size={18} onClick={toggleShowPassword} />
+                </button>
+              )}
+            </label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="Insert your password"
               name="password"
+              onKeyDown={handleDown}
               onChange={handlePasswordInput}
               className="w-full rounded-md p-2 shadow"
             />
@@ -65,15 +90,18 @@ export default function Login() {
         </div>
 
         <div className="flex gap-4">
-          <button className="base-button-lg" type="button">
-            SIGN IN
-          </button>
+          <Link to="/signin">
+            <button className="base-button-lg" type="button">
+              SIGN UP
+            </button>
+          </Link>
+
           <button
             onClick={handleLogin}
             className="base-button-lg"
-            type="button"
+            type="submit"
           >
-            LOGIN
+            LOG IN
           </button>
         </div>
       </form>

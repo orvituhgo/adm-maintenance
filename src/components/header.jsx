@@ -7,7 +7,7 @@ import { LoginContext } from '../contexts/LoginContextProvider';
 export default function Header() {
   const { user, getActiveProfile } = useContext(LoginContext);
   const pathing = useLocation().pathname;
-  const noShow = ['/login', '/profile', '/forgotpassword'];
+  const noShow = ['/login', '/profile', '/forgotpassword', '/signin'];
   const activeProfile = getActiveProfile();
 
   return (

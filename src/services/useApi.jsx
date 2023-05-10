@@ -1,4 +1,7 @@
 import { api } from './axios';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+
+import { auth } from '../configs/firebase';
 
 export const useApi = () => ({
   validateToken: async (token) => {
@@ -25,7 +28,20 @@ export const useApi = () => ({
     // const response = await api.post('/validate', { token });
     // return response.data;
   },
-  login: async (email, passoword) => {
+  login: (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(errorCode);
+        console.error(errorMessage);
+      });
     return {
       user: {
         username: 'admin',
@@ -47,14 +63,20 @@ export const useApi = () => ({
       },
       token: '123456789',
     };
-    // const response = await api.post('/signin', { email, passoword });
+    // const response = await api.post('/signin', { email, password });
     // return response.data
   },
   logout: async () => {
-    return {
-      user: { username: 'admin', passoword: 'admin' },
-      token: '123456789',
-    };
+    try {
+      await signOut(auth);
+      console.log('sai');
+      return {
+        user: { username: 'admin', passoword: 'admin' },
+        token: '123456789',
+      };
+    } catch (err) {
+      console.error(err);
+    }
     // const response = await api.post('/logout');
     // return response.data;
   },

@@ -12,6 +12,12 @@ body {
 }
 
 @layer components {
+  .general-container-sm {
+    @apply relative flex min-h-full flex-col overflow-x-hidden rounded-md bg-offWhite;
+    margin: 44px auto 20px auto;
+    width: 93%;
+    height: 1200px;
+  }
   .general-container {
     @apply relative flex min-h-full flex-col overflow-x-hidden rounded-md bg-offWhite;
     margin: 44px auto 20px auto;

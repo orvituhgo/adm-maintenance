@@ -3,19 +3,21 @@ import { Routes, Route } from 'react-router-dom';
 
 import PrivateRoute from './PrivateRoute';
 import Login from '../pages/login';
-import User from '../pages/user';
-import Home from '../pages/home';
-import Profile from '../pages/profile.jsx';
-import Logout from '../pages/logout';
-import Page404 from '../pages/page404';
 import ForgotPassword from '../pages/forgotPassword';
+import SignUp from '../pages/signUp';
+import Profile from '../pages/profile.jsx';
+import Home from '../pages/home';
+import User from '../pages/user';
+import Page404 from '../pages/page404';
 import Details from '../pages/details';
+import Logout from '../pages/logout';
 
 export default function AllRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
+      <Route path="/signin" element={<SignUp />} />
       <Route
         path="/profile"
         element={

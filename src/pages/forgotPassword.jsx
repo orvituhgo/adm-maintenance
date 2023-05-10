@@ -28,13 +28,13 @@ export default function ForgotPassword() {
             className="rounded-md bg-primary px-4 py-2 font-bold text-white shadow"
             type="button"
           >
-            VOLTAR
+            BACK
           </button>
           <button
             className="rounded-md bg-primary px-6 py-4 font-bold text-white shadow"
             type="button"
           >
-            ENVIAR
+            SEND
           </button>
         </div>
       </form>
