@@ -1,19 +1,25 @@
 import { createContext, useEffect, useState, useContext } from 'react';
 import { useApi } from '../services/useApi';
-import { BuildingsContext } from './BuildingsContextProvider';
+import { useFirestore } from '../services/useFirestore';
 
 export const LoginContext = createContext({});
 
 export default function LoginContextProvider({ children }) {
   const [user, setUser] = useState([]);
+  const firestore = useFirestore();
 
   useEffect(() => {
     const validateToken = async () => {
-      const storageData = localStorage.getItem('loginToken');
-      if (storageData) {
-        const data = await api.validateToken(storageData);
-        if (data.user) {
-          setUser(data.user);
+      const dataStoraged = localStorage.getItem('loginToken');
+      console.log('Data storaged: ', dataStoraged);
+      if (dataStoraged) {
+        const dataParsed = JSON.parse(dataStoraged);
+        console.log('Data parsed: ', dataParsed);
+        const data = await firestore.getUser(dataParsed.id);
+        console.log('data', data);
+        if (data) {
+          setUser(data);
+          console.log('user', user);
         }
       }
     };
@@ -26,17 +32,23 @@ export default function LoginContextProvider({ children }) {
 
   const login = async (email, password) => {
     const data = await api.login(email, password);
-    if (data.user) {
-      console.log(data.user.username, data.user.password, data.buildings);
+    const dataToStorage = {
+      token: data.user.accessToken,
+      id: data.user.uid,
+    };
+    console.log('dataToStorage: ', dataToStorage);
+    if (data) {
+      console.log(data.user);
       setUser(data.user);
-      setToken(data.token);
+      console.log('setUser: ', data.user);
+      setToken(JSON.stringify(dataToStorage));
       return true;
     }
     return false;
   };
 
   const logout = async () => {
-    const data = await api.logout();
+    await api.logout();
     setUser(null);
     setToken('');
     unsetActiveProfile();

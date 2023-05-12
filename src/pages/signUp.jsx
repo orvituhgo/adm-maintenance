@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
+import { useFirestore } from '../services/useFirestore';
 import { auth } from '../configs/firebase';
 
 export default function SignIn() {
@@ -15,6 +16,7 @@ export default function SignIn() {
   const [createdAccount, setCreatedAccount] = useState(false);
 
   const navigate = useNavigate();
+  const firestore = useFirestore();
 
   function toggleShowPassword(e) {
     e.preventDefault();
@@ -29,7 +31,13 @@ export default function SignIn() {
   async function handleNewUser() {
     if (email && password && passwordReapeated) {
       if (password === passwordReapeated) {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        console.log(userCredential);
+        await firestore.addUser(userCredential.user.uid, email);
         setCreatedAccount(true);
       } else {
         alert("Password doesn't match");

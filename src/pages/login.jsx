@@ -9,6 +9,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 export default function Login() {
   const navigate = useNavigate();
   const { login } = useContext(LoginContext);
+  const [wrongInfo, setWrongInfo] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -34,10 +35,13 @@ export default function Login() {
       const isLogged = await login(username, password);
       if (isLogged) {
         navigate('/profile');
+        return;
       }
     } else {
       alert('username and password does not right');
+      return;
     }
+    setWrongInfo(true);
   }
 
   return (
@@ -83,6 +87,11 @@ export default function Login() {
               <Link to="/forgotpassword">Did you forget your password?</Link>
             </span>
           </div>
+          {wrongInfo && (
+            <div className="rounded-md border-success bg-error/30 text-center font-semibold leading-10 text-error">
+              <h2>Wrong email or password</h2>
+            </div>
+          )}
         </div>
         <div className="flex h-1/6 w-1/2 flex-wrap items-center justify-center gap-4 bg-white shadow-sm">
           <input className="" type="checkbox" name="" id="" />
@@ -90,7 +99,7 @@ export default function Login() {
         </div>
 
         <div className="flex gap-4">
-          <Link to="/signin">
+          <Link to="/signup">
             <button className="base-button-lg" type="button">
               SIGN UP
             </button>
@@ -99,7 +108,7 @@ export default function Login() {
           <button
             onClick={handleLogin}
             className="base-button-lg"
-            type="submit"
+            type="button"
           >
             LOG IN
           </button>

@@ -7,7 +7,7 @@ import { LoginContext } from '../contexts/LoginContextProvider';
 export default function Header() {
   const { user, getActiveProfile } = useContext(LoginContext);
   const pathing = useLocation().pathname;
-  const noShow = ['/login', '/profile', '/forgotpassword', '/signin'];
+  const noShow = ['/login', '/profile', '/forgotpassword', '/signup'];
   const activeProfile = getActiveProfile();
 
   return (
@@ -19,8 +19,9 @@ export default function Header() {
         >
           {/* {isLoggedIn && <span>Olá, User</span>} */}
           {user ? (
-            <span className="mr-0">Olá, {user.username}</span>
+            <span className="mr-0">Olá, {user.email}</span>
           ) : (
+            // <span className="mr-0">Olá, {user.email.slice('@')[0]}</span>
             <span className="mr-0">Error, user not logged </span>
           )}
           <ul className="flex w-1/4 justify-center gap-6 bg-primary">
