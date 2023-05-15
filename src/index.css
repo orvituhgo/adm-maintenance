@@ -25,7 +25,7 @@ body {
     height: 1200px;
   }
   .title-container {
-    @apply p-10 text-left text-2xl  font-bold;
+    @apply text-left text-2xl font-bold;
   }
   .table-os {
     @apply mx-10 table-fixed border-collapse border-y-secundary;

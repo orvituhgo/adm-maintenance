@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, useContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { useApi } from '../services/useApi';
 import { useFirestore } from '../services/useFirestore';
 
@@ -6,29 +6,30 @@ export const LoginContext = createContext({});
 
 export default function LoginContextProvider({ children }) {
   const [user, setUser] = useState([]);
+  const [buildingList, setBuildingList] = useState([]);
+
   const firestore = useFirestore();
 
   useEffect(() => {
     const validateToken = async () => {
-      const dataStoraged = localStorage.getItem('loginToken');
-      console.log('Data storaged: ', dataStoraged);
+      const dataStoraged = sessionStorage.getItem('loginToken'); // substituir para verificar no servidor
       if (dataStoraged) {
+        console.log('pegando user');
         const dataParsed = JSON.parse(dataStoraged);
-        console.log('Data parsed: ', dataParsed);
         const data = await firestore.getUser(dataParsed.id);
-        console.log('data', data);
-        if (data) {
-          setUser(data);
-          console.log('user', user);
-        }
+        setUser(data);
       }
     };
+
     validateToken();
+    console.log('setUser: ', user);
+    console.log('setBuildingList: ', buildingList);
   }, []);
   //não necessário watcher pois está dentro de um hook useState forçando a rodar useEffect sempre que mudar o state
 
   //functions async to fetch the api here
   const api = useApi();
+  const firebase = useFirestore();
 
   const login = async (email, password) => {
     const data = await api.login(email, password);
@@ -36,11 +37,10 @@ export default function LoginContextProvider({ children }) {
       token: data.user.accessToken,
       id: data.user.uid,
     };
-    console.log('dataToStorage: ', dataToStorage);
     if (data) {
       console.log(data.user);
       setUser(data.user);
-      console.log('setUser: ', data.user);
+      // console.log('setUser: ', data.user);
       setToken(JSON.stringify(dataToStorage));
       return true;
     }
@@ -55,26 +55,30 @@ export default function LoginContextProvider({ children }) {
   };
 
   const getActiveProfile = () => {
-    return localStorage.getItem('activeProfile');
+    return sessionStorage.getItem('activeProfile');
   };
   const setActiveProfile = (profileClicked) => {
-    localStorage.setItem('activeProfile', profileClicked);
+    sessionStorage.setItem('activeProfile', profileClicked);
+  };
+  const getLoginToken = () => {
+    return sessionStorage.getItem('loginToken');
   };
   const unsetActiveProfile = () => {
     setActiveProfile('');
   };
-
   const setToken = (token) => {
-    localStorage.setItem('loginToken', token);
+    sessionStorage.setItem('loginToken', token);
   };
 
   const value = {
     user,
+    buildingList,
     login,
     logout,
     getActiveProfile,
     setActiveProfile,
     unsetActiveProfile,
+    getLoginToken,
   };
 
   return (
