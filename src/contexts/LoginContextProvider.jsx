@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, useContext } from 'react';
 import { useApi } from '../services/useApi';
 import { useFirestore } from '../services/useFirestore';
+import { onSnapshot } from 'firebase/firestore';
 
 export const LoginContext = createContext({});
 
@@ -11,15 +12,11 @@ export default function LoginContextProvider({ children }) {
   useEffect(() => {
     const validateToken = async () => {
       const dataStoraged = localStorage.getItem('loginToken');
-      console.log('Data storaged: ', dataStoraged);
       if (dataStoraged) {
         const dataParsed = JSON.parse(dataStoraged);
-        console.log('Data parsed: ', dataParsed);
         const data = await firestore.getUser(dataParsed.id);
-        console.log('data', data);
         if (data) {
           setUser(data);
-          console.log('user', user);
         }
       }
     };
@@ -30,6 +27,15 @@ export default function LoginContextProvider({ children }) {
   //functions async to fetch the api here
   const api = useApi();
 
+  const listenerUser = (id) => {
+    const docRef = doc(`/users/${id}`);
+    onSnapshot(docRef, (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        console.log('docSnapshot: ', docSnapshot.data());
+      }
+    });
+  };
+
   const login = async (email, password) => {
     const data = await api.login(email, password);
     const dataToStorage = {
@@ -38,9 +44,7 @@ export default function LoginContextProvider({ children }) {
     };
     console.log('dataToStorage: ', dataToStorage);
     if (data) {
-      console.log(data.user);
       setUser(data.user);
-      console.log('setUser: ', data.user);
       setToken(JSON.stringify(dataToStorage));
       return true;
     }
