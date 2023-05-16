@@ -10,6 +10,7 @@ import {
   updateDoc,
   arrayUnion,
   getDoc,
+  where,
 } from 'firebase/firestore';
 import { db } from '../configs/firebase';
 
@@ -24,6 +25,21 @@ export const useFirestore = () => ({
       console.log('Document written with ID: ', docRef.userId);
     } catch (e) {
       console.error('Error adding document: ', e);
+    }
+  },
+  getUsersBuildingsInfo: async (buildings) => {
+    try {
+      const docRef = collection(db, 'buildings');
+      const queryRef = query(docRef, where('nickname', 'in', buildings));
+      const dataSnapshot = await getDocs(queryRef);
+      const list = [];
+      dataSnapshot.forEach((doc) => {
+        console.log(doc.id, '=>', doc.data());
+        list.push(doc.data());
+      });
+      return list;
+    } catch (error) {
+      console.log(error);
     }
   },
   getUser: async (id) => {

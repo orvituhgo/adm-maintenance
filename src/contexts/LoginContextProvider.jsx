@@ -11,15 +11,11 @@ export default function LoginContextProvider({ children }) {
   useEffect(() => {
     const validateToken = async () => {
       const dataStoraged = localStorage.getItem('loginToken');
-      console.log('Data storaged: ', dataStoraged);
       if (dataStoraged) {
         const dataParsed = JSON.parse(dataStoraged);
-        console.log('Data parsed: ', dataParsed);
         const data = await firestore.getUser(dataParsed.id);
-        console.log('data', data);
         if (data) {
           setUser(data);
-          console.log('user', user);
         }
       }
     };
@@ -38,9 +34,7 @@ export default function LoginContextProvider({ children }) {
     };
     console.log('dataToStorage: ', dataToStorage);
     if (data) {
-      console.log(data.user);
       setUser(data.user);
-      console.log('setUser: ', data.user);
       setToken(JSON.stringify(dataToStorage));
       return true;
     }
