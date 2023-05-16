@@ -8,8 +8,7 @@ export const BuildingsContext = createContext({});
 
 export default function BuildingsContextProvider({ children }) {
   const [buildingInfo, setBuildingInfo] = useState([]);
-  // const [buildings, setBuildings] = useState([]);
-
+  // const
   const api = useApi();
   const firestore = useFirestore();
 

@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { useApi } from '../services/useApi';
 import { useFirestore } from '../services/useFirestore';
+import { onSnapshot } from 'firebase/firestore';
 
 export const LoginContext = createContext({});
 
@@ -17,7 +18,9 @@ export default function LoginContextProvider({ children }) {
         console.log('pegando user');
         const dataParsed = JSON.parse(dataStoraged);
         const data = await firestore.getUser(dataParsed.id);
-        setUser(data);
+        if (data) {
+          setUser(data);
+        }
       }
     };
 
@@ -31,6 +34,15 @@ export default function LoginContextProvider({ children }) {
   const api = useApi();
   const firebase = useFirestore();
 
+  const listenerUser = (id) => {
+    const docRef = doc(`/users/${id}`);
+    onSnapshot(docRef, (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        console.log('docSnapshot: ', docSnapshot.data());
+      }
+    });
+  };
+
   const login = async (email, password) => {
     const data = await api.login(email, password);
     const dataToStorage = {
@@ -38,9 +50,7 @@ export default function LoginContextProvider({ children }) {
       id: data.user.uid,
     };
     if (data) {
-      console.log(data.user);
       setUser(data.user);
-      // console.log('setUser: ', data.user);
       setToken(JSON.stringify(dataToStorage));
       return true;
     }

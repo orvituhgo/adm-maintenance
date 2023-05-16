@@ -10,6 +10,7 @@ export default function Profile() {
   const [showBoxAdding, setShowBoxAdding] = useState(false);
   const [nickname, setNickname] = useState('');
   const [url, setUrl] = useState('');
+  const [buildingsToShow, setBuildingsToShow] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -18,24 +19,17 @@ export default function Profile() {
   const { user, setActiveProfile, unsetActiveProfile, buildingsList } =
     useContext(LoginContext);
 
-  const buildings = getBuildingList();
+  const { userId, buildingsList } = user;
 
-  async function getBuildingList() {
-    const list = [];
-    user?.buildingsList?.forEach(async (building, i) => {
-      const response = await firestore.getBuildingDescription(building);
-      list[i] = response;
-    });
-    console.log('list: ', list);
-    return list;
-  }
+  const showBuildingsList = async () => {
+    const list = await firestore.getUsersBuildingsInfo(buildingsList);
+    setBuildingsToShow(list);
+  };
 
   useEffect(() => {
     unsetActiveProfile();
-    setTimeout(() => {
-      console.log('entrando no timeout');
-    }, 3000);
-  }, []);
+    showBuildingsList();
+  }, [buildingsList]);
 
   function handleNickname(e) {
     setNickname(e.target.value);
@@ -51,6 +45,7 @@ export default function Profile() {
   }
 
   function handleShowAddingBox() {
+    console.log(buildingsList, buildingsToShow);
     setShowBoxAdding(!showBoxAdding);
   }
 
@@ -58,31 +53,33 @@ export default function Profile() {
     await firestore.addBuilding(nickname, url);
   }
 
+  function handleShowBuildings() {
+    setLoading(false);
+    showBuildingsList();
+  }
+
   return (
     <>
-      <div
-        onClick={() => console.log('buildings: ', buildings)}
-        className="flex h-screen w-screen flex-col items-center justify-evenly bg-primaryDark"
-      >
-        <div className="relative flex h-5/6 max-w-7xl items-center justify-start gap-8 overflow-hidden">
-          {console.log(buildings) &&
-            buildings.map((building, index) => (
-              <div
-                onClick={() => handleClickProfile(building)}
-                key={index}
-                className="profile-card"
-              >
-                <img
-                  src={
-                    building.url
-                      ? building.url
-                      : 'https://placehold.co/400x500/736b66/403d39'
-                  }
-                  alt={building}
-                />
-                <h2>{building}</h2>
-              </div>
-            ))}
+      <div className="flex h-screen w-screen flex-col items-center justify-evenly bg-primaryDark">
+        <div className="relative flex h-5/6 max-w-7xl items-center justify-start gap-8 overflow-auto">
+          {!loading &&
+            buildingsToShow.map((building, index) => {
+              return (
+                <div
+                  onClick={() => handleClickProfile(building.nickname)}
+                  key={index}
+                  className="profile-card"
+                >
+                  <img src={building.url} alt={building.nickname} />
+                  <h2>{building.nickname}</h2>
+                </div>
+              );
+            })}
+          {loading && (
+            <button onClick={handleShowBuildings} className="base-button-lg">
+              Show buildings
+            </button>
+          )}
         </div>
         <button className="text-offWhite" onClick={handleShowAddingBox}>
           <FaPlusCircle size={48} />
