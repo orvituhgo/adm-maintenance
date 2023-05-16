@@ -30,15 +30,14 @@ export default function Profile() {
 
   useEffect(() => {
     unsetActiveProfile();
-  }, []);
+    showBuildingsList();
+  }, [buildingsList]);
 
   function handleNickname(e) {
-    console.log(e.target.value);
     setNickname(e.target.value);
   }
 
   function handleUrl(e) {
-    console.log(e.target.value);
     setUrl(e.target.value);
   }
 

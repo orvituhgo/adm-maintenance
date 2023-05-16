@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, useContext } from 'react';
 import { useApi } from '../services/useApi';
 import { useFirestore } from '../services/useFirestore';
+import { onSnapshot } from 'firebase/firestore';
 
 export const LoginContext = createContext({});
 
@@ -25,6 +26,15 @@ export default function LoginContextProvider({ children }) {
 
   //functions async to fetch the api here
   const api = useApi();
+
+  const listenerUser = (id) => {
+    const docRef = doc(`/users/${id}`);
+    onSnapshot(docRef, (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        console.log('docSnapshot: ', docSnapshot.data());
+      }
+    });
+  };
 
   const login = async (email, password) => {
     const data = await api.login(email, password);

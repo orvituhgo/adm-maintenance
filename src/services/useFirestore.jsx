@@ -2,7 +2,6 @@ import {
   collection,
   doc,
   setDoc,
-  addDoc,
   serverTimestamp,
   query,
   collectionGroup,
@@ -11,6 +10,7 @@ import {
   arrayUnion,
   getDoc,
   where,
+  onSnapshot,
 } from 'firebase/firestore';
 import { db } from '../configs/firebase';
 
@@ -26,6 +26,15 @@ export const useFirestore = () => ({
     } catch (e) {
       console.error('Error adding document: ', e);
     }
+  },
+  listenerUser: (id) => {
+    const docRef = doc(db, `/users/${id}`);
+    onSnapshot(docRef, (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        return docSnapshot.data();
+      }
+      return false;
+    });
   },
   getUsersBuildingsInfo: async (buildings) => {
     try {
@@ -48,7 +57,6 @@ export const useFirestore = () => ({
       const data = await getDoc(docRef);
       if (data.exists()) {
         const docData = data.data();
-        console.log('docData', docData);
         return docData;
       }
     } catch (e) {
@@ -61,6 +69,7 @@ export const useFirestore = () => ({
       buildingsList: arrayUnion(newBuilding),
     });
   },
+
   addBuilding: async (
     nickname,
     url = 'https://placehold.co/400x500/736b66/403d39'
