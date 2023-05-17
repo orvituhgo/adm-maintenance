@@ -5,6 +5,7 @@ import { FaPlusCircle, FaCheck } from 'react-icons/fa';
 import { BuildingsContext } from '../contexts/BuildingsContextProvider';
 import { LoginContext } from '../contexts/LoginContextProvider';
 import { useFirestore } from '../services/useFirestore';
+import { db } from '../configs/firebase';
 
 export default function Profile() {
   const [showBoxAdding, setShowBoxAdding] = useState(false);
@@ -12,23 +13,18 @@ export default function Profile() {
   const [url, setUrl] = useState('');
   const [buildingsToShow, setBuildingsToShow] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [successAdding, setSuccessAdding] = useState(false);
 
   const navigate = useNavigate();
   const firestore = useFirestore();
 
-  const { user, setActiveProfile, unsetActiveProfile, buildingsList } =
+  const { user, setActiveProfile, unsetActiveProfile } =
     useContext(LoginContext);
 
   const { userId, buildingsList } = user;
 
-  const showBuildingsList = async () => {
-    const list = await firestore.getUsersBuildingsInfo(buildingsList);
-    setBuildingsToShow(list);
-  };
-
   useEffect(() => {
     unsetActiveProfile();
-    showBuildingsList();
   }, [buildingsList]);
 
   function handleNickname(e) {
@@ -50,12 +46,15 @@ export default function Profile() {
   }
 
   async function handleSubmitBuilding() {
-    await firestore.addBuilding(nickname, url);
-  }
-
-  function handleShowBuildings() {
-    setLoading(false);
-    showBuildingsList();
+    const image = 'https://placehold.co/600x400';
+    const addedBuilding = await firestore.addBuilding(nickname, image);
+    const updatedUser = await firestore.updateUserBuildingList(nickname);
+    if (addedBuilding && updatedUser) {
+      setSuccessAdding(true);
+      setTimeout(() => {
+        setSuccessAdding(false);
+      }, 1500);
+    }
   }
 
   return (
@@ -76,7 +75,10 @@ export default function Profile() {
               );
             })}
           {loading && (
-            <button onClick={handleShowBuildings} className="base-button-lg">
+            <button
+              onClick={() => console.log('mostrar prédios')}
+              className="base-button-lg"
+            >
               Show buildings
             </button>
           )}
@@ -87,33 +89,41 @@ export default function Profile() {
 
         {showBoxAdding && (
           <div className="absolute bottom-24 flex h-fit w-fit flex-col rounded-md bg-offWhite p-5">
-            <h2 className="mb-2 flex justify-center text-center font-extrabold">
-              Add a building
-            </h2>
-            <label htmlFor="username">Nickname</label>
-            <input
-              type="text"
-              placeholder="Insert your username"
-              name="username"
-              onChange={handleNickname}
-              className="w-full rounded-md p-2 shadow "
-            />
-            <label className="mt-2" htmlFor="picture">
-              Picture
-            </label>
-            <input
-              type="url"
-              placeholder="Insert your username"
-              name="picture"
-              onChange={handleUrl}
-              className="w-full rounded-md p-2 shadow"
-            />
-            <button
-              onClick={handleSubmitBuilding}
-              className="mt-2 flex h-8 w-12 items-center justify-center self-end rounded-md bg-primary"
-            >
-              <FaCheck color="white" />
-            </button>
+            {!successAdding ? (
+              <>
+                <h2 className="mb-2 flex justify-center text-center font-extrabold">
+                  Add a building
+                </h2>
+                <label htmlFor="username">Nickname</label>
+                <input
+                  type="text"
+                  placeholder="Insert your username"
+                  name="username"
+                  onChange={handleNickname}
+                  className="w-full rounded-md p-2 shadow "
+                />
+                <label className="mt-2" htmlFor="picture">
+                  Picture
+                </label>
+                <input
+                  type="url"
+                  placeholder="Insert your username"
+                  name="picture"
+                  onChange={handleUrl}
+                  className="w-full rounded-md p-2 shadow"
+                />
+                <button
+                  onClick={handleSubmitBuilding}
+                  className="mt-2 flex h-8 w-12 items-center justify-center self-end rounded-md bg-primary"
+                >
+                  <FaCheck color="white" />
+                </button>
+              </>
+            ) : (
+              <div className="rounded-md border-success bg-success/30 text-center font-semibold leading-10 text-success">
+                <h2>Created account</h2>
+              </div>
+            )}
           </div>
         )}
       </div>
