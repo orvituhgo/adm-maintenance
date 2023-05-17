@@ -63,6 +63,13 @@ export const useFirestore = () => ({
       console.log(error);
     }
   },
+  getBuildingListFromUser: async (id) => {
+    const user = getUser(id);
+    if (user) {
+      return user.buildingsList;
+    }
+    return false;
+  },
   getBuildingDescription: async (nickname) => {
     try {
       const docRef = doc(db, `/buildings/${nickname}`);

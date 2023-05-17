@@ -9,6 +9,7 @@ export default function LoginContextProvider({ children }) {
   const [user, setUser] = useState([]);
   const [buildingList, setBuildingList] = useState([]);
 
+  const api = useApi();
   const firestore = useFirestore();
 
   useEffect(() => {
@@ -31,8 +32,6 @@ export default function LoginContextProvider({ children }) {
   //não necessário watcher pois está dentro de um hook useState forçando a rodar useEffect sempre que mudar o state
 
   //functions async to fetch the api here
-  const api = useApi();
-  const firebase = useFirestore();
 
   const listenerUser = (id) => {
     const docRef = doc(`/users/${id}`);
@@ -83,6 +82,7 @@ export default function LoginContextProvider({ children }) {
   const value = {
     user,
     buildingList,
+    setUser,
     login,
     logout,
     getActiveProfile,

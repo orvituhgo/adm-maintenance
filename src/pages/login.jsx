@@ -1,10 +1,7 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LoginContext } from '../contexts/LoginContextProvider';
-import { auth } from '../configs/firebase';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
-
-import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function Login() {
   const navigate = useNavigate();

@@ -27,6 +27,11 @@ body {
   .title-container {
     @apply text-left text-2xl font-bold;
   }
+  .form-container {
+    @apply flex flex-col justify-center gap-2 bg-primary py-6 text-offWhite;
+  }
+
+  /*TABLES*/
   .table-os {
     @apply mx-10 table-fixed border-collapse border-y-secundary;
   }
@@ -46,10 +51,23 @@ body {
   .profile-card {
     @apply flex min-w-fit cursor-pointer flex-col items-center justify-center rounded-sm bg-primary text-lg font-bold text-secundaryDark shadow-sm;
   }
+
+  /*BUTTONS*/
   .base-button-lg {
     @apply rounded-md bg-primary px-6 py-4 font-bold text-white shadow outline-1 outline-offWhite;
   }
   .base-button-sm {
     @apply rounded-md bg-primary px-4 py-2 font-bold text-white shadow outline-1 outline-offWhite;
+  }
+
+  /*INPUTS AND LABELS AND OPTS*/
+  .input {
+    @apply w-full rounded-md bg-offWhite p-2 text-secundaryDark shadow outline-none;
+  }
+  .input-disabled {
+    @apply w-full cursor-not-allowed rounded-md bg-offWhite/90 p-2 text-secundaryDark shadow outline-none;
+  }
+  .option {
+    @apply bg-offWhite outline-none;
   }
 }
