@@ -12,7 +12,7 @@ export default function BuildingsContextProvider({ children }) {
   const api = useApi();
   const firestore = useFirestore();
 
-  const { getActiveProfile, user } = useContext(LoginContext);
+  const { getActiveProfile, user, setUser } = useContext(LoginContext);
 
   const watcherStorageData = getActiveProfile();
 
@@ -48,12 +48,12 @@ export default function BuildingsContextProvider({ children }) {
     }
   };
 
-  const createBuildingToUser = async (id, nickname, url) => {
+  const createBuildingToUser = (id, nickname, url) => {
     const image = url || 'https://placehold.co/400x500/736b66/403d39';
-    const newBuilding = await firestore.addBuilding(nickname, image);
-    await firestore.addOsList(nickname);
-    await firestore.updateUserBuildingsList(id, nickname);
-    console.log(newBuilding);
+    const newBuilding = firestore.addBuilding(nickname, image);
+    firestore.addOsList(nickname);
+    const newBuildingList = firestore.updateUserBuildingsList(id, nickname);
+    return newBuildingList;
   };
 
   const value = {

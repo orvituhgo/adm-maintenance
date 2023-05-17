@@ -8,6 +8,7 @@ export default function LoginContextProvider({ children }) {
   const [user, setUser] = useState([]);
   const [buildingList, setBuildingList] = useState([]);
 
+  const api = useApi();
   const firestore = useFirestore();
 
   useEffect(() => {
@@ -25,7 +26,6 @@ export default function LoginContextProvider({ children }) {
   }, []);
 
   //functions async to fetch the api here
-  const api = useApi();
 
   const login = async (email, password) => {
     const data = await api.login(email, password);
@@ -63,6 +63,7 @@ export default function LoginContextProvider({ children }) {
   const value = {
     user,
     buildingList,
+    setUser,
     login,
     logout,
     getActiveProfile,

@@ -62,6 +62,7 @@ export default function Profile() {
       <div className="flex h-screen w-screen flex-col items-center justify-evenly bg-primaryDark">
         <div className="relative flex h-5/6 max-w-7xl items-center justify-start gap-8 overflow-auto">
           {!loading &&
+            buildingsToShow &&
             buildingsToShow.map((building, index) => {
               return (
                 <div
