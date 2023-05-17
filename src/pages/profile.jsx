@@ -121,7 +121,7 @@ export default function Profile() {
               </>
             ) : (
               <div className="rounded-md border-success bg-success/30 text-center font-semibold leading-10 text-success">
-                <h2>Created account</h2>
+                <h2>Created building</h2>
               </div>
             )}
           </div>
