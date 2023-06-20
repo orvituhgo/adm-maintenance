@@ -26,12 +26,6 @@ export default function BuildingsContextProvider({ children }) {
         }
       }
     };
-    // const setBuildingsList = async () => {
-    //   const { userId } = user;
-    //   const data = await getBuildingsToShowInProfile(userId);
-    //   setBuildings(data);
-    // };
-    // setBuildingsList();
     validateProfile();
   }, [watcherStorageData]);
   //necessário watcher aqui pois não está num hook, portanto não estava sendo observado quando perdia os dados

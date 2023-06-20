@@ -5,24 +5,25 @@ import { Link, useLocation } from 'react-router-dom';
 import { LoginContext } from '../contexts/LoginContextProvider';
 
 export default function Header() {
-  const { user, getActiveProfile } = useContext(LoginContext);
+  const { getLoginToken, getActiveProfile, user } = useContext(LoginContext);
   const pathing = useLocation().pathname;
   const noShow = [];
   // const noShow = ['/login', '/profile', '/forgotpassword', '/signup'];
 
   const activeProfile = getActiveProfile();
+  const email = getLoginToken().email;
 
   return (
     <>
       {!noShow.includes(pathing) && (
         <nav
-          onClick={() => console.log(activeProfile)}
+          onClick={() => console.log(user, email, activeProfile)}
           className="flex h-16 w-full items-center justify-end bg-primary text-secundaryDark"
         >
           {/* {isLoggedIn && <span>Olá, User</span>} */}
           {user ? (
             <span onClick={() => console.log(user)} className="mr-0">
-              Olá, {user.email}
+              Olá, {email}
             </span>
           ) : (
             // <span className="mr-0">Olá, {user.email.slice('@')[0]}</span>
